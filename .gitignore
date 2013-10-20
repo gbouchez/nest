@@ -1,18 +1,10 @@
 # Object files
 *.o
-*.ko
+*.oa
 
-# Libraries
-*.lib
-*.a
+*.d
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+*.iso
+*.bin
 
-# Executables
-*.exe
-*.out
-*.app
+tmp/*
