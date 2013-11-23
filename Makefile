@@ -46,5 +46,3 @@ clean:
 		@find -name *.o -delete
 		@find -name *.d -delete
 		@find -name *.oa -delete
-		@find -name *.bin -delete
-		@find -name *.iso -delete

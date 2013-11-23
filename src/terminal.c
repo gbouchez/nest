@@ -8,7 +8,6 @@ void terminal_initialize(void)
 	terminal_clearscreen();
 	terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
 	terminal_buffer = (uint16_t*) VGA_ADDRESS;
-	new_input();
 }
 
 void terminal_clearscreen(void)

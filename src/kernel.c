@@ -1,17 +1,18 @@
+#include <stdint.h>
+#include "kernel.h"
 #include "terminal.h"
 
-#if defined(__linux__)
-#error "You need a cross-compiler."
-#endif
-
-void kernel_main()
+void kernel_main(uint32_t eax)
 {
 	terminal_initialize();
-	char test[60];
-	for (int i = 0; i < 60; i = i+2)
-	{
-		test[i] = 48 + ((i/2)%10);
-		test[i+1] = '\n';
-	}
-	terminal_writestring(test);
+	terminal_writestring(KERNEL_MESSAGE_WELCOME);
+	check_multiboot(eax);
+	new_input();
+}
+
+void check_multiboot(uint32_t eax)
+{
+        if (eax == MULTIBOOT_MAGIC_NUMBER) {
+                terminal_writestring(KERNEL_MESSAGE_MULTIBOOT);
+        }
 }
