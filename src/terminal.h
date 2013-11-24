@@ -2,7 +2,6 @@
 #define TERMINAL_H
 #include <stdint.h>
 #include <stddef.h>
-#include "terminal.h"
 
 void (*terminal_initialize)(void);
 void (*terminal_clearscreen)(void);

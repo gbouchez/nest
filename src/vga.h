@@ -47,6 +47,7 @@ uint8_t vga_color;
 uint16_t* vga_buffer;
 
 void vga_initialize(void);
+void vga_setcursor(void);
 void vga_clearscreen(void);
 void vga_gotoxy(uint8_t x, uint8_t y);
 void vga_writestring(const char* data);

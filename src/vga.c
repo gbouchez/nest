@@ -1,8 +1,10 @@
 #include "terminal.h"
 #include "vga.h"
+#include "lib/string.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include "kernel.h"
 
 void vga_initialize(void)
 {
@@ -13,7 +15,7 @@ void vga_initialize(void)
 
 void vga_setcursor(void)
 {
-	unsigned short position = vga_row*80+vga_column;
+	unsigned short position = (unsigned short)(vga_row*80+vga_column);
 	
     outportb(BASE_VIDEO_IO_PORT, 0x0E);
     outportb(BASE_VIDEO_IO_PORT+1, position >> 8);
