@@ -46,3 +46,4 @@ clean:
 		@find -name *.o -delete
 		@find -name *.d -delete
 		@find -name *.oa -delete
+		@find -name *~ -delete
