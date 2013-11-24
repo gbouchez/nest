@@ -12,4 +12,6 @@ extern void kernel_main(uint32_t eax);
 
 void check_multiboot(uint32_t eax);
 
+void outportb (unsigned short _port, unsigned char _data);
+
 #endif

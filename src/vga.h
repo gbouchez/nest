@@ -15,6 +15,8 @@ terminal_linefeed = &vga_linefeed; \
 
 #define VGA_ADDRESS 0xB8000
 
+#define BASE_VIDEO_IO_PORT *(uint16_t*)0x0463
+
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 24;
 

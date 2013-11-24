@@ -11,6 +11,17 @@ void vga_initialize(void)
 	vga_buffer = (uint16_t*) VGA_ADDRESS;
 }
 
+void vga_setcursor(void)
+{
+	unsigned short position = vga_row*80+vga_column;
+	
+    outportb(BASE_VIDEO_IO_PORT, 0x0E);
+    outportb(BASE_VIDEO_IO_PORT+1, position >> 8);
+    
+    outportb(BASE_VIDEO_IO_PORT, 0x0F);
+    outportb(BASE_VIDEO_IO_PORT+1, position);
+}
+
 void vga_clearscreen(void)
 {
 	vga_gotoxy(0,0);
@@ -43,6 +54,7 @@ void vga_putchar(char c)
 		vga_column = 0;
 		vga_newline();
 	}
+	vga_setcursor();
 }
 
 void vga_putentryat(char c, size_t x, size_t y)
