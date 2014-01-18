@@ -16,8 +16,8 @@ void kernel_main(uint32_t eax)
 	terminal_writestring(KERNEL_MESSAGE_WELCOME);
 	check_multiboot(eax);
 	new_input();
-	char test = 12;
-//	terminal_putchar(12/0);
+	terminal_putchar(12/0);
+	new_input();
 	for(;;);
 }
 

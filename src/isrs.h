@@ -44,6 +44,6 @@ struct regs
 };
 
 void isrs_install(void);
-void fault_handler(struct regs *r);
+extern void fault_handler(struct regs *r);
 
 #endif

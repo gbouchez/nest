@@ -1,6 +1,5 @@
 #include "isrs.h"
 #include "terminal.h"
-
 extern const char *exception_messages[] =
 {
 	"Division By Zero",
@@ -34,10 +33,9 @@ extern const char *exception_messages[] =
 	"Reserved Exception",
 	"Reserved Exception",
 	"Reserved Exception",
-	"Reserved Exception",
+	"Reserved Exception"
 };
-
-void isrs_install()
+void isrs_install(void)
 {
 	idt_set_gate(0, (unsigned)isr0, 0x08, 0x8E);
 	idt_set_gate(1, (unsigned)isr1, 0x08, 0x8E);
