@@ -14,18 +14,21 @@ void kernel_main(uint32_t eax)
 	TERMINAL_SET_VGA
 	terminal_initialize();
 	terminal_writestring(KERNEL_MESSAGE_WELCOME);
-	check_multiboot(eax);
+	if (check_multiboot(eax) == 1) {
+		terminal_writestring(KERNEL_MESSAGE_MULTIBOOT);
+	}
 	new_input();
 	terminal_putchar(12/0);
 	new_input();
 	for(;;);
 }
 
-void check_multiboot(uint32_t eax)
+uint8_t check_multiboot(uint32_t eax)
 {
         if (eax == MULTIBOOT_MAGIC_NUMBER) {
-                terminal_writestring(KERNEL_MESSAGE_MULTIBOOT);
+                return 1;
         }
+        return 0;
 }
 
 // Thanks to Bran's kernel development tutorial

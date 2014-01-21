@@ -21,7 +21,7 @@ WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
             -Wuninitialized -Wconversion -Wstrict-prototypes
 
 GCCBIN   := i586-elf-gcc
-ASBIN    := i586-elf-as
+ASBIN    := nasm -f elf
 LDFLAGS  := -T $(LDFILE) -o $(BINARY) -ffreestanding -O2 -nostdlib -lgcc
 CFLAGS   := -g -std=gnu99 -ffreestanding -O2 $(WARNINGS)
 

@@ -3,8 +3,8 @@
 
 #include <stddef.h>
 
-void *memcpy(void *str1, const  void *str2, size_t n);
-void *memset(void *s, int c, size_t n);
-size_t strlen(const char* str);
+extern void *memcpy(void *str1, const  void *str2, size_t n);
+extern void *memset(void *s, int c, size_t n);
+extern size_t strlen(const char* str);
 
 #endif
