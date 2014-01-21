@@ -15,7 +15,7 @@ void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags)
 void idt_install(void)
 {
 	idtp.limit = (sizeof (struct idt_entry) * 256) - 1;
-	idtp.base = &idt;
+	idtp.base = (uint32_t) &idt;
 	
 	memset(&idt, 0, sizeof(struct idt_entry)*256);
 	

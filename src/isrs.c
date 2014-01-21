@@ -1,5 +1,7 @@
 #include "isrs.h"
 #include "terminal.h"
+#include "idt.h"
+
 extern const char *exception_messages[] =
 {
 	"Division By Zero",

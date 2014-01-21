@@ -13,5 +13,6 @@ extern void kernel_main(uint32_t eax);
 uint8_t check_multiboot(uint32_t eax);
 
 extern void outportb(uint16_t _port, uint8_t _data);
+extern unsigned char inportb (uint16_t _port);
 
 #endif

@@ -10,14 +10,14 @@ void gdt_set_gate(uint32_t num, uint32_t base, uint32_t limit, uint8_t access, u
 	gdt[num].limit_low = (limit & 0xFFFF);
 	gdt[num].granularity = ((limit >> 16) & 0x0F);
 	
-	gdt[num].granularity |= (gran & 0xF0);
+	gdt[num].granularity |= (uint8_t)(gran & 0xF0);
     gdt[num].access = access;
 }
 
 void gdt_install(void)
 {
 	gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
-	gp.base = &gdt;
+	gp.base = (uint32_t)&gdt;
 	
 	// NULL descriptor
 	gdt_set_gate(0,0,0,0,0);
