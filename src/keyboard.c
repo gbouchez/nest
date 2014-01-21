@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include "keyboard.h"
 #include "isrs.h"
 #include "irq.h"
@@ -133,11 +134,11 @@ void keyboard_handler(struct regs *r)
 			keyboard_flags ^= KEY_FLAG_SCROLL_LOCK;
 			break;
 		}
-        	while((inportb(0x64) & 2) != 0);
-        	outportb(0x60, 0xED);
-        	inportb(0x60);
-        	while((inportb(0x64) & 2) != 0);
-        	outportb(0x60, keyboard_flags);
+        	while((inportb(KEYBOARD_CONTROL_REGISTER) & 2) != 0);
+        	outportb(KEYBOARD_DATA_REGISTER, 0xED);
+        	inportb(KEYBOARD_DATA_REGISTER);
+        	while((inportb(KEYBOARD_CONTROL_REGISTER) & 2) != 0);
+        	outportb(KEYBOARD_DATA_REGISTER, keyboard_flags);
         } else {
 	        terminal_putchar(kbd[scancode]);
 	    }
