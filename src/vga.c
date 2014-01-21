@@ -50,6 +50,11 @@ void vga_putchar(char c)
 		vga_linefeed();
 		return;
 	}
+	if (c == '\b')
+	{
+		vga_backspace();
+		return;
+	}
 	vga_putentryat(c, vga_column, vga_row);
 	if ( ++vga_column == VGA_WIDTH )
 	{
@@ -71,6 +76,7 @@ void vga_linefeed(void)
 {
 	vga_column = 0;
 	vga_newline();
+	vga_setcursor();
 }
 
 void vga_newline(void)
@@ -99,4 +105,21 @@ uint16_t vga_makeentry(char c, uint8_t color)
 	uint16_t c16 = c;
 	uint16_t color16 = color;
 	return c16 | color16 << 8;
+}
+
+void vga_backspace(void)
+{
+	if (vga_column == 0 && vga_row == 0)
+	{
+		return;
+	}
+	if (vga_column == 0)
+	{
+		vga_column = VGA_WIDTH - 1;
+		vga_row -= 1;
+	} else {
+		vga_column -= 1;
+	}
+	vga_putentryat(' ', vga_column, vga_row);
+	vga_setcursor();
 }
