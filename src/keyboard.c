@@ -21,9 +21,9 @@ unsigned char kbdus[KEY_CODES_NUMBER] =
   't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
     0,			/* 29   - Control */
   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'', '`',   0,		/* Left shift */
+ '\'', '`',   KEY_LEFT_SHIFT,		/* Left shift */
  '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-  'm', ',', '.', '/',   0,				/* Right shift */
+  'm', ',', '.', '/',   KEY_RIGHT_SHIFT,				/* Right shift */
   '*',
     0,	/* Alt */
   ' ',	/* Space bar */
@@ -60,10 +60,10 @@ unsigned char kbdfr[KEY_CODES_NUMBER] =
   'a', 'z', 'e', 'r',	/* 19 */
   't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
     0,			/* 29   - Control */
-  'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'', '`',   0,		/* Left shift */
+  'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',	/* 39 */
+ '\'', '`',   KEY_LEFT_SHIFT,		/* Left shift */
  '\\', 'w', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-  'm', ',', '.', '/',   0,				/* Right shift */
+  ',', ';', ':', '!',   KEY_RIGHT_SHIFT,				/* Right shift */
   '*',
     0,	/* Alt */
   ' ',	/* Space bar */
@@ -103,8 +103,11 @@ void keyboard_handler(struct regs *r)
     *  set, that means that a key has just been released */
     if (scancode & 0x80)
     {
-        /* You can use this one to see if the user released the
-        *  shift, alt, or control keys... */
+    	if (kbd[scancode] == KEY_LEFT_SHIFT || kbd[scancode] == KEY_RIGHT_SHIFT)
+    	{
+    		keyboard_flags &= ~KEY_FLAG_SHIFT;
+    		return;
+    	}
     }
     else
     {
@@ -120,6 +123,12 @@ void keyboard_handler(struct regs *r)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
+    	if (kbd[scancode] == KEY_LEFT_SHIFT || kbd[scancode] == KEY_RIGHT_SHIFT)
+    	{
+    		keyboard_flags |= KEY_FLAG_SHIFT;
+    		return;
+    	}
+    	
         if (kbd[scancode] == KEY_CAPS_LOCK
 	|| kbd[scancode] == KEY_NUM_LOCK
 	|| kbd[scancode] == KEY_SCROLL_LOCK) {
@@ -138,9 +147,18 @@ void keyboard_handler(struct regs *r)
         	outportb(KEYBOARD_DATA_REGISTER, 0xED);
         	inportb(KEYBOARD_DATA_REGISTER);
         	while((inportb(KEYBOARD_CONTROL_REGISTER) & 2) != 0);
-        	outportb(KEYBOARD_DATA_REGISTER, keyboard_flags);
+        	outportb(KEYBOARD_DATA_REGISTER, keyboard_flags & 0x7);
         } else {
-	        terminal_putchar(kbd[scancode]);
+        	char display = kbd[scancode];
+        	if (display >= 'a' && display <= 'z'
+        	&& (
+        		(keyboard_flags & (KEY_FLAG_SHIFT | KEY_FLAG_CAPS_LOCK)) != 0
+        		&& (keyboard_flags & (KEY_FLAG_SHIFT | KEY_FLAG_CAPS_LOCK)) != (KEY_FLAG_SHIFT | KEY_FLAG_CAPS_LOCK)
+        	))
+        	{
+        		display -= 32;
+        	}
+	        terminal_putchar(display);
 	    }
     }
 }
