@@ -8,6 +8,8 @@
 #include "irq.h"
 #include "timer.h"
 #include "keyboard.h"
+#include "io.h"
+#include "kdebug.h"
 
 #define KEYBOARD_LAYOUT_FR
 
@@ -24,12 +26,15 @@ void kernel_main(uint32_t eax)
 	kbd = kbdfr;
 	#endif
 	TERMINAL_SET_VGA
+	OUTPUT_SET_TERMINAL
 	terminal_initialize();
 	terminal_writestring(KERNEL_MESSAGE_WELCOME);
 	if (check_multiboot(eax) == 1) {
 		terminal_writestring(KERNEL_MESSAGE_MULTIBOOT);
 	}
 	new_input();
+	kprint_u32integer10(70000);
+	kprint_u32integer16(70000);
 	for(;;);
 }
 

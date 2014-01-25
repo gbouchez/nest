@@ -7,7 +7,6 @@
 terminal_initialize = &vga_initialize; \
 terminal_clearscreen = &vga_clearscreen; \
 terminal_gotoxy = &vga_gotoxy; \
-terminal_writestring = &vga_writestring; \
 terminal_putchar = &vga_putchar; \
 terminal_putentryat = &vga_putentryat; \
 terminal_newline = &vga_newline; \
@@ -58,5 +57,6 @@ void vga_newline(void);
 void vga_setcolor(uint8_t color);
 uint8_t vga_makecolor(enum vga_color fg, enum vga_color bg);
 uint16_t vga_makeentry(char c, uint8_t color);
+void vga_backspace(void);
 
 #endif

@@ -35,14 +35,6 @@ void vga_gotoxy(uint8_t x, uint8_t y)
 	vga_column = x;
 }
 
-// Output functions
-void vga_writestring(const char* data)
-{
-	size_t datalen = strlen(data);
-	for (size_t i = 0; i < datalen; i++)
-		vga_putchar(data[i]);
-}
-
 void vga_putchar(char c)
 {
 	if (c == '\n')
